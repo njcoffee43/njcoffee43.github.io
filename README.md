@@ -21,11 +21,11 @@ The file is checked when the app starts. A misspelled key, a missing required fi
 
 ## Deploying (GitHub Pages)
 
-The site is hosted for free on GitHub Pages at `https://<username>.github.io`. Every push to `main` runs [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). It runs the tests, saves the site as static HTML with `--export`, and publishes it.
+The site is hosted for free on GitHub Pages at `https://<username>.github.io`. Every push to `master` runs [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). It runs the tests, saves the site as static HTML with `--export`, and publishes it.
 
 One-time setup:
 
-1. Create a **public** GitHub repo named exactly `<username>.github.io`, and push this folder to its `main` branch. The site links to `/css/...`, so it must be served from the root of the domain; a repo with any other name would be served under `/<repo>/` and lose its styles.
+1. Create a **public** GitHub repo named exactly `<username>.github.io`, and push this folder to its `master` branch. The site links to `/css/...`, so it must be served from the root of the domain; a repo with any other name would be served under `/<repo>/` and lose its styles.
 2. In the repo, go to **Settings → Pages → Build and deployment** and set **Source** to **GitHub Actions**.
 3. Go to **Actions → Deploy to GitHub Pages → Run workflow**, or push a commit. The site is live about two minutes later.
 
@@ -44,4 +44,4 @@ To export locally (e.g. to check the output): `dotnet run --project src/Portfoli
 - **Light and dark themes:** the site follows the visitor's system setting, and the toggle saves their choice. A tiny inline script applies the saved theme before the page draws, so it doesn't flash.
 - **Search and link previews:** the page has a meta description, Open Graph tags, and schema.org `Person` data (JSON-LD).
 - **Server mode:** run as a live ASP.NET Core server (e.g. on Azure App Service), the app also sends `X-Content-Type-Options`, `X-Frame-Options` and `Referrer-Policy` headers, and has a health check at `/healthz`. GitHub Pages serves the exported files, so it doesn't send those headers.
-- **CI/CD:** [`.github/workflows/ci.yml`](.github/workflows/ci.yml) builds and tests on every push and pull request; [`deploy.yml`](.github/workflows/deploy.yml) publishes `main` to GitHub Pages.
+- **CI/CD:** [`.github/workflows/ci.yml`](.github/workflows/ci.yml) builds and tests on every push and pull request; [`deploy.yml`](.github/workflows/deploy.yml) publishes `master` to GitHub Pages.
