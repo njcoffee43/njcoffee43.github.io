@@ -1,0 +1,25 @@
+@page "/not-found"
+
+<PageTitle>Page not found</PageTitle>
+
+<section class="message-page">
+    <p class="message-code">404</p>
+    <h1>Page not found</h1>
+    <p>That page doesn't exist. The link may be out of date or mistyped.</p>
+    <a class="btn btn-primary" href="/">Back to the home page</a>
+</section>
+
+@code {
+    [CascadingParameter]
+    private HttpContext? HttpContext { get; set; }
+
+    // Other missing URLs are re-executed here with a 404 already set (see Program.cs);
+    // this makes a direct request to /not-found return 404 too.
+    protected override void OnInitialized()
+    {
+        if (HttpContext is { Response.HasStarted: false })
+        {
+            HttpContext.Response.StatusCode = StatusCodes.Status404NotFound;
+        }
+    }
+}

@@ -1,0 +1,25 @@
+@page "/error"
+@using System.Diagnostics
+
+<PageTitle>Something went wrong</PageTitle>
+
+<section class="message-page">
+    <p class="message-code">500</p>
+    <h1>Something went wrong</h1>
+    <p>The page hit an error. Please try again in a moment.</p>
+    @if (!string.IsNullOrEmpty(RequestId))
+    {
+        <p class="message-detail">Request ID: <code>@RequestId</code></p>
+    }
+    <a class="btn btn-primary" href="/">Back to the home page</a>
+</section>
+
+@code {
+    [CascadingParameter]
+    private HttpContext? HttpContext { get; set; }
+
+    private string? RequestId { get; set; }
+
+    protected override void OnInitialized() =>
+        RequestId = Activity.Current?.Id ?? HttpContext?.TraceIdentifier;
+}

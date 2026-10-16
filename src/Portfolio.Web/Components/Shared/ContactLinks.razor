@@ -1,0 +1,26 @@
+@* Email, GitHub, LinkedIn and resume buttons. Links left empty in profile.json are skipped. *@
+<div class="actions">
+    <a class="btn btn-primary" href="mailto:@Links.Email">
+        <Icon Kind="IconKind.Mail" />@(ShowEmailAddress ? Links.Email : "Email me")
+    </a>
+    @if (Links.GitHub.Length > 0)
+    {
+        <a class="btn" href="@Links.GitHub" target="_blank" rel="me noopener"><Icon Kind="IconKind.GitHub" />GitHub</a>
+    }
+    @if (Links.LinkedIn.Length > 0)
+    {
+        <a class="btn" href="@Links.LinkedIn" target="_blank" rel="me noopener"><Icon Kind="IconKind.LinkedIn" />LinkedIn</a>
+    }
+    @if (Links.Resume.Length > 0)
+    {
+        <a class="btn" href="@ResumeHref" target="_blank" rel="noopener"><Icon Kind="IconKind.Download" />Resume</a>
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired] public ProfileLinks Links { get; set; } = default!;
+    [Parameter] public bool ShowEmailAddress { get; set; }
+
+    // A bare file name like "resume.pdf" means a file in wwwroot.
+    private string ResumeHref => Links.Resume.Contains("://") ? Links.Resume : "/" + Links.Resume.TrimStart('/');
+}

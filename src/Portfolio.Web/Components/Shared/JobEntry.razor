@@ -1,0 +1,33 @@
+<article class="card entry">
+    <header class="entry-header">
+        <div>
+            <h3>@Job.Role</h3>
+            <p class="entry-org">
+                @Job.Company
+                @if (Job.Location.Length > 0)
+                {
+                    <span class="entry-location"> · @Job.Location</span>
+                }
+            </p>
+        </div>
+        <p class="entry-period">@Job.Period</p>
+    </header>
+    @if (Job.Summary.Length > 0)
+    {
+        <p class="entry-summary">@Job.Summary</p>
+    }
+    @if (Job.Highlights.Count > 0)
+    {
+        <ul class="highlights">
+            @foreach (var item in Job.Highlights)
+            {
+                <li>@item</li>
+            }
+        </ul>
+    }
+    <TagList Tags="Job.Tags" />
+</article>
+
+@code {
+    [Parameter, EditorRequired] public Job Job { get; set; } = default!;
+}

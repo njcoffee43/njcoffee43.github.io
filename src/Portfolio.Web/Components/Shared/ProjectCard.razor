@@ -1,0 +1,43 @@
+<article class="card entry">
+    <header class="entry-header">
+        <div>
+            <h3>@Project.Title</h3>
+            @if (Project.Kind.Length > 0)
+            {
+                <p class="entry-org">@Project.Kind</p>
+            }
+        </div>
+        @if (Project.Period.Length > 0)
+        {
+            <p class="entry-period">@Project.Period</p>
+        }
+    </header>
+    <p class="entry-summary">@Project.Summary</p>
+    @if (Project.Highlights.Count > 0)
+    {
+        <ul class="highlights">
+            @foreach (var item in Project.Highlights)
+            {
+                <li>@item</li>
+            }
+        </ul>
+    }
+    <TagList Tags="Project.Tags" />
+    @if (Project.RepoUrl.Length > 0 || Project.LiveUrl.Length > 0)
+    {
+        <p class="entry-links">
+            @if (Project.RepoUrl.Length > 0)
+            {
+                <a href="@Project.RepoUrl" target="_blank" rel="noopener"><Icon Kind="IconKind.Code" Size="16" />Source</a>
+            }
+            @if (Project.LiveUrl.Length > 0)
+            {
+                <a href="@Project.LiveUrl" target="_blank" rel="noopener"><Icon Kind="IconKind.ArrowUpRight" Size="16" />Live</a>
+            }
+        </p>
+    }
+</article>
+
+@code {
+    [Parameter, EditorRequired] public Project Project { get; set; } = default!;
+}

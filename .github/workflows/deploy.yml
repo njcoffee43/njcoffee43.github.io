@@ -1,0 +1,61 @@
+name: Deploy to GitHub Pages
+
+# Tests the site, saves it as static files, and publishes them to GitHub Pages.
+# One-time setup: repo Settings > Pages > Build and deployment > Source: "GitHub Actions".
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Test
+        run: dotnet test --configuration Release
+
+      - name: Export static site
+        run: >
+          dotnet run --project src/Portfolio.Web --configuration Release --no-launch-profile
+          -- --export "${{ runner.temp }}/site"
+
+      # The site links to /css/site.css etc., so it has to be served from the root of a domain.
+      - name: Check the site will be served from a domain root
+        if: ${{ !endsWith(github.event.repository.name, '.github.io') }}
+        run: >
+          echo "::warning::This repo is named '${{ github.event.repository.name }}'. GitHub Pages will serve it at
+          /${{ github.event.repository.name }}/ and the styles won't load. Name the repo
+          '${{ github.repository_owner }}.github.io' (or set up a custom domain) so it's served from the root."
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: ${{ runner.temp }}/site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

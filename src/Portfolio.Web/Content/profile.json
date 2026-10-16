@@ -1,0 +1,98 @@
+{
+  "name": "Nathan Coffee",
+  "headline": "Software Engineer · C# / .NET",
+  "summary": "I'm a backend developer working in C#, ASP.NET Core and SQL Server. I graduated from the University of Louisville in May 2026 after interning at Rawlings, where I built features for a healthcare claims recovery platform.",
+  "location": "Louisville, KY",
+  "availability": "Open to software engineering roles",
+  "about": [
+    "At Rawlings, a Machinify company, I worked in a large enterprise .NET codebase from August 2024 through December 2025. I took features through the whole cycle: work items and sprint planning in Azure DevOps, the code and its unit and integration tests, review with senior developers, and release through CI/CD pipelines.",
+    "My senior capstone went the other direction, down to the hardware. Our team built a LoRa sensor network for monitoring industrial refrigeration equipment: ESP32 nodes reading temperature and current sensors, and a Raspberry Pi gateway feeding InfluxDB and Grafana.",
+    "On my own time I build tools for the game The Bazaar: a battle simulator that runs thousands of seeded fights, and an AI assistant that reads the board and looks up item data to make recommendations."
+  ],
+  "links": {
+    "email": "njcoffee43@gmail.com",
+    "github": "https://github.com/njcoffee43",
+    "linkedin": "",
+    "resume": ""
+  },
+  "site": {
+    "url": "https://njcoffee43.github.io/",
+    "sourceCode": "https://github.com/njcoffee43/njcoffee43.github.io"
+  },
+  "experience": [
+    {
+      "role": "Software Engineering Intern",
+      "company": "Rawlings (a Machinify company)",
+      "location": "La Grange, KY",
+      "period": "Aug 2024 – Dec 2025",
+      "summary": "Backend development on a healthcare claims recovery and payment integrity platform.",
+      "highlights": [
+        "Developed and maintained backend features in C#, .NET and ASP.NET Core in an established enterprise codebase, using dependency injection, LINQ and Entity Framework Core.",
+        "Wrote and optimized SQL Server queries, stored procedures and data models for claims processing, subrogation and overpayment recovery over large volumes of healthcare data.",
+        "Built and maintained RESTful APIs and backend services behind internal tools and client-facing claims recovery applications.",
+        "Wrote unit and integration tests, and tracked down bugs and data discrepancies in claims workflows to make automated recovery and reporting more reliable.",
+        "Worked across the full SDLC in Azure DevOps (sprint planning, Git, code review, CI/CD pipelines) with senior developers, QA and product in an Agile/Scrum team."
+      ],
+      "tags": [ "C#", "ASP.NET Core", "Entity Framework Core", "LINQ", "SQL Server", "Azure DevOps" ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "Bazaar Battle Sim",
+      "kind": "Personal project",
+      "period": "2026",
+      "summary": "A Windows desktop app that simulates fights between two boards in The Bazaar. It runs thousands of seeded fights and reports win rates, output per item, and a health chart and combat log for a sample fight.",
+      "highlights": [
+        "Combat engine in a UI-free .NET 8 class library that models cooldowns, Haste, Slow and Freeze, multicast, crits, ammo, and chains of triggers with a loop guard.",
+        "WPF front end built with MVVM. Items are imported by pasting text from BazaarDB; the parser turns it into effects and triggers and warns about anything it can't model.",
+        "Seeded runs replay exactly the same fights after one item changes. xUnit tests cover the engine and the importer.",
+        "Shares a JSON build format with a dependency-free JavaScript version that runs in the browser."
+      ],
+      "tags": [ "C#", ".NET 8", "WPF", "MVVM", "xUnit", "JavaScript" ],
+      "repoUrl": "",
+      "liveUrl": ""
+    },
+    {
+      "title": "LoRa Wireless Sensor Network",
+      "kind": "Senior capstone · Team project",
+      "period": "Spring 2026",
+      "summary": "A multi-node wireless telemetry system for monitoring simulated industrial refrigeration equipment, built as a team with input from an industry partner.",
+      "highlights": [
+        "Programmed ESP32 (Heltec LoRa32) sensor nodes in C++ to read thermocouple, BME280 environmental and current sensors over I2C and transmit the readings over LoRa at 915 MHz.",
+        "Built a Raspberry Pi gateway in Python that received packets over SPI and stored time-series data in InfluxDB, with Grafana dashboards for live monitoring.",
+        "Diagnosed a UART/SPI radio incompatibility between the gateway and the nodes, and redesigned the gateway hardware to restore communication."
+      ],
+      "tags": [ "C++", "ESP32", "LoRa", "Python", "Raspberry Pi", "InfluxDB", "Grafana" ],
+      "repoUrl": "",
+      "liveUrl": ""
+    },
+    {
+      "title": "RAG-Based AI Assistant",
+      "kind": "Personal project",
+      "period": "2025",
+      "summary": "An AI assistant for The Bazaar that reads the in-game board and retrieves public item data from a vector database (retrieval-augmented generation) to give context-aware recommendations.",
+      "highlights": [],
+      "tags": [ "RAG", "Vector database", "LLMs" ],
+      "repoUrl": "",
+      "liveUrl": ""
+    }
+  ],
+  "skills": [
+    { "name": "Languages", "items": [ "C#", "C/C++", "Python", "SQL", "PowerShell", "JavaScript" ] },
+    { "name": "Backend & data", "items": [ ".NET / ASP.NET Core", "Entity Framework Core", "LINQ", "REST APIs", "SQL Server", "InfluxDB" ] },
+    { "name": "Hardware & embedded", "items": [ "ESP32", "Raspberry Pi", "Linux", "I2C / SPI / UART", "LoRa", "Grafana" ] },
+    { "name": "Tools & practices", "items": [ "Azure DevOps", "Git", "CI/CD pipelines", "Agile/Scrum", "Unit & integration testing" ] },
+    { "name": "IT & AI", "items": [ "Microsoft 365 / Exchange Online", "n8n", "Ollama", "Vector databases" ] }
+  ],
+  "education": [
+    {
+      "school": "University of Louisville, J.B. Speed School of Engineering",
+      "degree": "B.S. Computer Science & Engineering",
+      "period": "May 2026",
+      "details": []
+    }
+  ],
+  "certifications": [
+    { "name": "CompTIA Security+", "issued": "April 2024", "url": "" }
+  ]
+}

@@ -1,0 +1,55 @@
+@inherits LayoutComponentBase
+@inject Profile Profile
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+    <div class="container header-inner">
+        <a class="brand" href="/">@Profile.Name</a>
+        <nav class="site-nav" aria-label="Sections">
+            <ul>
+                @foreach (var (id, label) in Sections)
+                {
+                    <li><a href="/#@id" data-nav="@id">@label</a></li>
+                }
+            </ul>
+        </nav>
+        <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch between light and dark theme" title="Switch theme">
+            <Icon Kind="IconKind.Moon" Class="icon-moon" />
+            <Icon Kind="IconKind.Sun" Class="icon-sun" />
+        </button>
+    </div>
+</header>
+
+<main id="main" class="container" tabindex="-1">
+    @Body
+</main>
+
+<footer class="site-footer">
+    <div class="container footer-inner">
+        <p>&copy; @DateTime.UtcNow.Year @Profile.Name</p>
+        <p>
+            Built with ASP.NET Core and Blazor on .NET 8
+            @if (Profile.Site.SourceCode.Length > 0)
+            {
+                <text> · </text><a href="@Profile.Site.SourceCode" target="_blank" rel="noopener">View source</a>
+            }
+        </p>
+    </div>
+</footer>
+
+@code {
+    // Only link to sections that have something in them.
+    private IEnumerable<(string Id, string Label)> Sections
+    {
+        get
+        {
+            if (Profile.About.Count > 0) yield return ("about", "About");
+            if (Profile.Experience.Count > 0) yield return ("experience", "Experience");
+            if (Profile.Projects.Count > 0) yield return ("projects", "Projects");
+            if (Profile.Skills.Count > 0) yield return ("skills", "Skills");
+            if (Profile.Education.Count + Profile.Certifications.Count > 0) yield return ("education", "Education");
+            yield return ("contact", "Contact");
+        }
+    }
+}

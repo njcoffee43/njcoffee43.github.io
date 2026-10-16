@@ -1,0 +1,145 @@
+@page "/"
+@inject Profile Profile
+
+<PageTitle>@Profile.Name · @Profile.Headline</PageTitle>
+
+<HeadContent>
+    <meta name="description" content="@Profile.Summary" />
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content="@Profile.Name · @Profile.Headline" />
+    <meta property="og:description" content="@Profile.Summary" />
+    @if (Profile.Site.Url.Length > 0)
+    {
+        <meta property="og:url" content="@Profile.Site.Url" />
+        <link rel="canonical" href="@Profile.Site.Url" />
+    }
+    <meta name="twitter:card" content="summary" />
+    @((MarkupString)$"<script type=\"application/ld+json\">{StructuredData.PersonJsonLd(Profile)}</script>")
+</HeadContent>
+
+<section class="hero" aria-labelledby="hero-heading">
+    <h1 id="hero-heading">@Profile.Name</h1>
+    <p class="headline">@Profile.Headline</p>
+    <p class="lead">@Profile.Summary</p>
+    @if (Profile.Location.Length > 0 || Profile.Availability.Length > 0)
+    {
+        <ul class="hero-meta">
+            @if (Profile.Location.Length > 0)
+            {
+                <li><Icon Kind="IconKind.MapPin" Size="16" />@Profile.Location</li>
+            }
+            @if (Profile.Availability.Length > 0)
+            {
+                <li class="status"><span class="status-dot" aria-hidden="true"></span>@Profile.Availability</li>
+            }
+        </ul>
+    }
+    <ContactLinks Links="Profile.Links" />
+</section>
+
+@if (Profile.About.Count > 0)
+{
+    <section id="about" class="section" aria-labelledby="about-heading">
+        <h2 id="about-heading">About</h2>
+        <div class="prose">
+            @foreach (var paragraph in Profile.About)
+            {
+                <p>@paragraph</p>
+            }
+        </div>
+    </section>
+}
+
+@if (Profile.Experience.Count > 0)
+{
+    <section id="experience" class="section" aria-labelledby="experience-heading">
+        <h2 id="experience-heading">Experience</h2>
+        <div class="stack">
+            @foreach (var job in Profile.Experience)
+            {
+                <JobEntry Job="job" />
+            }
+        </div>
+    </section>
+}
+
+@if (Profile.Projects.Count > 0)
+{
+    <section id="projects" class="section" aria-labelledby="projects-heading">
+        <h2 id="projects-heading">Projects</h2>
+        <div class="stack">
+            @foreach (var project in Profile.Projects)
+            {
+                <ProjectCard Project="project" />
+            }
+        </div>
+    </section>
+}
+
+@if (Profile.Skills.Count > 0)
+{
+    <section id="skills" class="section" aria-labelledby="skills-heading">
+        <h2 id="skills-heading">Skills</h2>
+        <dl class="skills card">
+            @foreach (var group in Profile.Skills)
+            {
+                <div class="skill-row">
+                    <dt>@group.Name</dt>
+                    <dd><TagList Tags="group.Items" Label="@group.Name" /></dd>
+                </div>
+            }
+        </dl>
+    </section>
+}
+
+@if (Profile.Education.Count + Profile.Certifications.Count > 0)
+{
+    <section id="education" class="section" aria-labelledby="education-heading">
+        <h2 id="education-heading">Education &amp; certifications</h2>
+        <div class="grid-2">
+            @foreach (var school in Profile.Education)
+            {
+                <article class="card entry">
+                    <h3>@school.Degree</h3>
+                    <p class="entry-org">@school.School</p>
+                    @if (school.Period.Length > 0)
+                    {
+                        <p class="entry-period">@school.Period</p>
+                    }
+                    @if (school.Details.Count > 0)
+                    {
+                        <ul class="highlights">
+                            @foreach (var detail in school.Details)
+                            {
+                                <li>@detail</li>
+                            }
+                        </ul>
+                    }
+                </article>
+            }
+            @foreach (var cert in Profile.Certifications)
+            {
+                <article class="card entry">
+                    <h3>@cert.Name</h3>
+                    <p class="entry-org">Certification</p>
+                    @if (cert.Issued.Length > 0)
+                    {
+                        <p class="entry-period">Issued @cert.Issued</p>
+                    }
+                    @if (cert.Url.Length > 0)
+                    {
+                        <p class="entry-links">
+                            <a href="@cert.Url" target="_blank" rel="noopener"><Icon Kind="IconKind.ArrowUpRight" Size="16" />Verify</a>
+                        </p>
+                    }
+                </article>
+            }
+        </div>
+    </section>
+}
+
+<section id="contact" class="section contact" aria-labelledby="contact-heading">
+    <h2 id="contact-heading">Get in touch</h2>
+    <p>Email is the best way to reach me. I'm glad to talk about roles, projects, or anything on this page.</p>
+    <ContactLinks Links="Profile.Links" ShowEmailAddress="true" />
+</section>
